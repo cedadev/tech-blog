@@ -6,11 +6,9 @@ date:   2025-06-24 15:00:00
 tags: [Cloud, API, STAC, Kerchunk, Zarr, Interoperable, Pystac]
 ---
 
-TL;DR The CEDA DataPoint API has now been added to the JASMIN Standard Computing Environment (JASPY) Module. Users across all fields can discover data represented in STAC using this new API that is specific to their areas of study/research, and access datasets with ease regardless of underlying data format.
+TL;DR STAC (Spatio-Temporal Asset Catalog) is a widely adopted standard for metadata records within the Earth Observation community and beyond, created as a standardised way to expose collections of spatio-temporal data. For several years, CEDA has been working towards a STAC-based metadata catalog to represent our data holdings within the archive. The CEDA STAC catalog has been in development for several years and has become part of the Earth Observation Data Hub (EODH) project led by the National Centre for Earth Observation (NCEO). A key innovation for the CEDA catalog has been the inclusion of a CMIP6 data profile into STAC, an important step towards bridging the gap between Earth Observation and Climatology datasets.
 
-For several years, CEDA has been working towards a STAC-based metadata catalog which represents a large set of our data holdings within the archive. STAC (Spatio-Temporal Asset Catalog) is a widely adopted standard for metadata records within the Earth Observation community and beyond, created as a standardised way to expose collections of spatio-temporal data. The CEDA STAC catalog has been in development for several years and has become part of the Earth Observation Data Hub (EODH) project led by the National Centre for Earth Observation (NCEO). 
-
-DataPoint is a package developed at CEDA to provide key functionality for improved search functionality across the CEDA STAC catalog, as well as integrating known cloud-optimised formats for effective access to analysis-ready data. In this article we discuss the inspiration for creating DataPoint and its impact for the user community, as well as the strategic direction for CEDA towards cloud-enabled data processing. 
+DataPoint is a package developed at CEDA to provide key features for improved search functionality across the CEDA STAC catalog, as well as integrating known cloud-optimised formats for effective access to analysis-ready data. In this article we discuss the inspiration for creating DataPoint and its impact for the user community, as well as the strategic direction for CEDA towards cloud-enabled data processing. 
 
 # Index
 - [Acronyms](#acronyms)
@@ -31,10 +29,13 @@ DataPoint is a package developed at CEDA to provide key functionality for improv
 | ARD | Analysis Ready Data |
 | EOCIS | Earth Observation Climate Information Service |
 | EODH | Earth Observation Data Hub |
+| OPeNDAP | Open-source Project for a Network Data Access Protocol |
 
 # Cloud Optimised Formats for Data
 
-Over the last few years CEDA has developed various tools to generate new cloud-optimised data representations, with tools like Kerchunk and Zarr API. These tools have been developed to enable greater access to large sets of data traditionally stored in data archives that require knowledge of the filesystem and access methods in order to make use of the data. Cloud-optimised data representations open the door to greater interconnectivity between data centres and fewer physical/technical barriers to research requiring data analysis. CEDA focuses specifically on data representations/references using Kerchunk, where duplication of data for cloud-based storage is minimised, as cloud storage can often be expensive and constitute a considerable additional carbon cost.
+Over the last few years CEDA has creating workflows to generate new cloud-optimised data representations at-scale, using open-source tools like Kerchunk and Zarr. These tools have been developed to enable greater access to large sets of data traditionally stored in data archives that require knowledge of the posix filesystem and access methods in order to make use of the data. Cloud-optimised data representations open the door to greater interconnectivity between data centres and fewer physical/technical barriers to research requiring data analysis. This represents the latest step towards subsetting and aggregating data for greater data access, following projects such as OPeNDAP which enables HTTP range requests to access subsets of data in NetCDF and other formats. 
+
+The Kerchunk reference specification, used to produce "Virtual" zarr stores enables similar range-based HTTP access to archival data, condensed into a single reference file which serves as an access layer on top of the existing dataset. Chunk-based references are stored using JSON and can be used to construct an Xarray Dataset, using Dask for lazy data loading. By comparison, the Zarr format splits data chunks into individual binary files, with an attached metadata file that can be used with the Zarr API. CEDA focuses specifically on data representations/references using Kerchunk, where duplication of data for cloud-based storage is minimised, as public cloud storage can often be expensive and constitute a considerable additional carbon cost.
 
 {% include figure.html
     image_url="assets/img/posts/2025-06-24-ceda-datapoint/KerchunkAccess.png"
@@ -46,13 +47,15 @@ Over the last few years CEDA has developed various tools to generate new cloud-o
     description="Figure 2: Zarr Cloud-based Data Access"
 %}
 
-These new data representations have been ingested into the CEDA Archive and are accessible to all users - except that no one knows how to use or even find them. Since these technologies are relatively new to most of the communities that make use of our services, the mechanisms for accessing these types of data are not well known or well understood. Researchers using our data are more familiar with well-established formats like NetCDF/HDF which have existed for several decades as standards for data archival. What has been missing is a collation of these technologies into a single tool that CEDA can direct users towards, and focus efforts towards improving data access across all new developments.
+These new data representations have been ingested into the CEDA Archive and are accessible to all users, however since these technologies are relatively new to most user communities the mechanisms for accessing these types of data are unfamiliar and not widely known. Researchers using our data are more familiar with well-established formats like NetCDF/HDF which have existed for several decades as standards for data archival. What has been missing is a collation of these technologies into a single client-side tool that CEDA can direct users towards, and focus efforts towards improving data access across all new developments.
 
 # Inspiration for DataPoint
 
 ## Why did we create DataPoint?
 
 DataPoint is the culmination of several projects involving the creation of a single point of access to the data archived at CEDA; the so-called ‘CEDA Singularity’. It is a STAC-based API client which connects to our STAC catalogs and can be used to search across our data holdings to find specific datasets and metadata. What sets DataPoint apart is the ability to directly open datasets from cloud formats without the user needing to understand the format or specific configuration for opening the dataset.
+
+Other similar technologies exist which can build data representations using cloud-based API endpoints. For example in the Earth Observation community there is a python client called openEO which focuses specifically on enabling cloud-based processing and workflows through openEO backends that a user can connect and arrange processing tasks. There is however a lack of a tool for seamless client-side data access to simply handle the configurations of STAC in a simplified way. DataPoint is intended as a tool for reducing the complexity of loading data from STAC using cloud-based technologies.
 
 {% include figure.html
     image_url="assets/img/posts/2025-06-24-ceda-datapoint/SearchFutures.png"
@@ -65,7 +68,7 @@ As of the writing of this article, DataPoint should be considered a non-producti
 
 The best and most encourageable use case for DataPoint for the time being is for quicklooks and brief analysis of data within the STAC catalog, as well as its use as a data locator. Users are advised to identify key parameters of the dataset they are accessing (i.e item identifier or path to data files), to ensure reusability of any data analysis methods being performed. Future DataPoint updates will involve enabling easier sharing and saving of searches which are reusable and fit with the FAIR data principles.
 
-With that being said, now is a great opportunity to start using DataPoint for locating and quickly accessing data within CEDA as this method of data retrieval is becoming increasingly common within the wider climate data landscape. User-provided feedback can directly impact new feature releases on a short timescale as this project is in active development, especially since this is a CEDA-developed package which mostly caters for CEDA-centric use cases.
+With that being said, now is a great opportunity to start using DataPoint for locating and quickly accessing data within CEDA as this method of data retrieval is becoming increasingly common within the wider climate data landscape. User-provided feedback can directly impact new feature releases on a short timescale as this project is in active development, especially since this is a CEDA-developed package which mostly caters for CEDA-centric use cases. The CEDA DataPoint API has now been added to the JASMIN Standard Computing Environment (JASPY) Module.
 
 To summarise:
  - DataPoint is developed directly by CEDA to serve the user community, so CEDA-centric use cases can be catered directly with features requested by the community.
@@ -75,13 +78,13 @@ To summarise:
 
 DataPoint has been designed with scientific research use cases in mind - with encouragement for feedback from the user community at every stage that can be incorporated into new feature releases for DataPoint. Highlighted here are some of the features added to DataPoint that are specifically aimed at improving the user experience of finding and accessing data.
 
-## Abstraction of the Filesystem
+## Abstraction of the POSIX Filesystem
 
-STAC assets within the collections that are accessed by DataPoint have a reference to the exact data path within the CEDA archive where specific files can be found. This is used within DataPoint to locate the specific asset file, without the user needing to know the location of relevant datasets themselves. The creation of data cubes (objects that contain metadata about the datasets) is seamlessly abstract, such that no user-supplied information should be necessary, beyond the search parameters needed to identify the correct dataset. This represents a shift from a **file-based** to **object-based** mindset, although DataPoint also makes it easy to extract the set of assets as a list for any given dataset - if users prefer to locate the files themselves.
+STAC *assets* within the collections that are accessed by DataPoint have a reference to the exact data path within the CEDA archive where specific files can be found. This is used within DataPoint to locate the specific STAC *asset*, without the user needing to know the location of relevant datasets themselves. The creation of data cubes (objects that contain metadata about the datasets) is seamlessly abstract, such that no user-supplied information should be necessary, beyond the search parameters needed to identify the correct dataset. This represents a shift from a **file-based** to a more intuitive **variable-based** mindset, where users can access a time-series for a given variable or array index, rather than rely on a set of files. DataPoint does however ensure that the set of *assets* can be extracted as a list for any given dataset - if users prefer to locate the files themselves.
 
 ## Format-Agnostic Data Handling
 
-Where DataPoint objects have been created to represent specific datasets, these objects have the capacity to access and serve data directly, again without user configuration required. The format of the data and storage configurations do not need to be known to the user; you do not need to know that the data is stored as Cloud-Optimised GeoTiff (COG), Zarr or any other format. DataPoint knows how to open them for you - this is currently supported for cloud-based formats like COG, Zarr and Kerchunk, but in future will be extended for other file types like NetCDF/HDF, CSV, etc. An example of how to extract an xarray-based data representation from a given STAC item (regardless of format) is below:
+Where DataPoint objects have been created to represent specific datasets, these objects have the capacity to access and serve data directly, again without user configuration required. The format of the data and storage configurations do not need to be known to the user; you do not need to know that the data is stored as Cloud-Optimised GeoTiff (COG), Zarr or any other format. DataPoint knows how to open them for you - this is currently supported for cloud-based formats/specifications like COG, Zarr and Kerchunk, but in future will be extended for other file types like NetCDF/HDF, CSV, etc. An example of how to extract an xarray-based data representation from a given STAC item (regardless of format) is below:
 
 ```
 from ceda_datapoint import DataPointClient
@@ -105,7 +108,7 @@ The selections made via the pystac-based DataPoint search, are now applied direc
 
 - **query.variables**: Pystac implements a metadata query parameter for searching specific fields in the STAC properties. For STAC records that contain a ``variables`` property, this search is applied directly to the data array on output, so your dataset contains just the variables you're searching for. This feature can also be utilised via the ``data_selections`` parameter specific to DataPoint - see below.
 
-An example query where the single-search selections will be applied is shown here:
+An example query where the single-search selections will be applied is shown below. In this case an example collection is being queried to find a specific area of interest (GeoJSON AOI), within a given datetime window. Specifically this collection uses the CMIP6 schema for metadata attributes, and we have identified the Sea Surface Temperature (SST) as the intended variable. Note that the duplication of the ``variables`` attribute is not necessary in most cases where the ``variable`` forms part of the STAC metadata.
 
 ```
 >>> client.search(
@@ -117,10 +120,10 @@ An example query where the single-search selections will be applied is shown her
     datetime='2025-01-01/2025-12-31',
     query=[
         'cmip6:experiment_id=001',
-        'variables=clt'
+        'variables=sst'
     ],
     data_selection={
-        'variables':['clt','sst']
+        'variables':['sst']
         'sel':{
             'nv':slice(0,5)
         }
@@ -130,7 +133,7 @@ An example query where the single-search selections will be applied is shown her
 
 # Current CEDA STAC Collections
 
-The CEDA STAC API server is still in an experimental stage, subject to change as the collections are updated and metadata is revised. As of the publication of this article there are 17 top-level collections via the main CEDA API, with CEDA-developed CCI collections being constructed in a separate location as part of the Knowledge Exchange program. For more details regarding CCI data, see the ESA Climate Office's [Open Data Portal](https://climate.esa.int/en/data/#/dashboard)
+The CEDA STAC API server is still in a pre-production stage, subject to change as the collections are updated and metadata is revised. As of the publication of this article there are 17 top-level collections via the main CEDA API, with CEDA-developed CCI collections being constructed in a separate location as part of the Knowledge Exchange programme. For more details regarding CCI data, see the ESA Climate Office's [Open Data Portal](https://climate.esa.int/en/data/#/dashboard)
 
 {% include figure.html
     image_url="assets/img/posts/2025-06-24-ceda-datapoint/STACBrowser.png"
@@ -143,7 +146,7 @@ Some specific collections include cmip6 (CMIP Phase 6, provided by WCRP), cordex
 
 The Earth Observation Data Hub project aims to develop and operate a new centralised software infrastructure to provide a new 'single point' of access for UK EO data offerings from distributed public and commercial centres. This includes data held both by CEDA on behalf of NERC/NCEO and other groups, as well as commercially sourced data from companies like Airbus. Part of the Data Hub includes both a STAC-based catalog and API client tools for data access. The catalog hosted by EODH is partially constructed from the CEDA STAC catalog, with the addition of data from other sources, so any data hosted by CEDA will appear in the EODH for use with any cloud-based applications deployed on the hub. A link to the data hub can be found in the further resources section of this article - the Hub project has begun development of the second phase, following the success of the pathfinder phase in year 1.
 
-Additionally, one of the API client tools provided by Oxidian as part of the Hub toolkit - pyEODH - operates similar functionality to DataPoint. Elements from the DataPoint package (such as the CloudProduct module) are used within pyEODH to ensure widespread use of the cloud-based formats available through the catalog, and further expand the use case of DataPoint. This package is still in early development, so feedback to both pyeodh and DataPoint are strongly encouraged.
+Additionally, one of the API client tools provided by Oxidian as part of the Hub toolkit - [pyeodh](https://github.com/EO-DataHub/pyeodh) - operates similar functionality to DataPoint. Elements from the DataPoint package (such as the CloudProduct module) are used within *pyeodh* to ensure widespread use of the cloud-based formats available through the catalog, and further expand the use case of DataPoint. This package is still in early development, so feedback to both pyeodh and DataPoint are strongly encouraged.
 
 # Next Steps
 
@@ -163,12 +166,18 @@ Works are ongoing within CEDA to expand the current STAC holdings that represent
 If you would like to discuss this topic or other questions related to data Storage, Access and Discovery, please contact Daniel Westwood by [email](daniel.westwood@stfc.ac.uk).
 
 # Further Resources
+
+## Github Repositories and Documentation
 - [CEDA DataPoint Github](https://github.com/cedadev/datapoint)
 - [DataPoint Documentation](https://cedadev.github.io/datapoint/)
-- [CEDA STAC Browser](https://radiantearth.github.io/stac-browser/#/external/api.stac.ceda.ac.uk/?.language=en)
-- [Earth Observation Data Hub](https://eodatahub.org.uk/)
 - [pyeodh Github Repository](https://github.com/EO-DataHub/pyeodh)
+- [openEO Documentation](https://openeo.org/)
 - [STAC Specification](https://stacspec.org/en)
 - [Pystac Client Documentation](https://pystac-client.readthedocs.io/en/stable/)
 - [Kerchunk Documentation](https://fsspec.github.io/kerchunk/)
 - [VirtualiZarr Documentation](https://virtualizarr.readthedocs.io/en/latest/)
+
+## Services and Organisations
+- [EOCIS: Earth Observation Climate Information Service](https://eocis.org/)
+- [CEDA STAC Browser](https://radiantearth.github.io/stac-browser/#/external/api.stac.ceda.ac.uk/?.language=en)
+- [Earth Observation Data Hub](https://eodatahub.org.uk/)
