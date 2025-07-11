@@ -61,7 +61,15 @@ DataPoint is the culmination of several projects involving the creation of a sin
 
 ## Why should you use DataPoint?
 
-Content
+As of the writing of this article, DataPoint should be considered a non-production package, meaning that it is not advised to solely rely on DataPoint for all data analysis use cases. While the syntax and usage of DataPoint is unlikely to change, the STAC catalog infrastructure is likely to be updated and improved on an ongoing basis, which may cause changes to observed search results with the current package.
+
+The best and most encourageable use case for DataPoint for the time being is for quicklooks and brief analysis of data within the STAC catalog, as well as its use as a data locator. Users are advised to identify key parameters of the dataset they are accessing (i.e item identifier or path to data files), to ensure reusability of any data analysis methods being performed. Future DataPoint updates will involve enabling easier sharing and saving of searches which are reusable and fit with the FAIR data principles.
+
+With that being said, now is a great opportunity to start using DataPoint for locating and quickly accessing data within CEDA as this method of data retrieval is becoming increasingly common within the wider climate data landscape. User-provided feedback can directly impact new feature releases on a short timescale as this project is in active development, especially since this is a CEDA-developed package which mostly caters for CEDA-centric use cases.
+
+To summarise:
+ - DataPoint is developed directly by CEDA to serve the user community, so CEDA-centric use cases can be catered directly with features requested by the community.
+ - API-based/cloud-native data access is becoming increasingly common - why not start with DataPoint?
 
 # DataPoint API Features
 
@@ -133,7 +141,9 @@ Some specific collections include cmip6 (CMIP Phase 6, provided by WCRP), cordex
 
 ## Earth Observation Data Hub
 
-- Earth Observation Data Hub
+The Earth Observation Data Hub project aims to develop and operate a new centralised software infrastructure to provide a new 'single point' of access for UK EO data offerings from distributed public and commercial centres. This includes data held both by CEDA on behalf of NERC/NCEO and other groups, as well as commercially sourced data from companies like Airbus. Part of the Data Hub includes both a STAC-based catalog and API client tools for data access. The catalog hosted by EODH is partially constructed from the CEDA STAC catalog, with the addition of data from other sources, so any data hosted by CEDA will appear in the EODH for use with any cloud-based applications deployed on the hub. A link to the data hub can be found in the further resources section of this article - the Hub project has begun development of the second phase, following the success of the pathfinder phase in year 1.
+
+Additionally, one of the API client tools provided by Oxidian as part of the Hub toolkit - pyEODH - operates similar functionality to DataPoint. Elements from the DataPoint package (such as the CloudProduct module) are used within pyEODH to ensure widespread use of the cloud-based formats available through the catalog, and further expand the use case of DataPoint. This package is still in early development, so feedback to both pyeodh and DataPoint are strongly encouraged.
 
 # Next Steps
 
@@ -157,6 +167,7 @@ If you would like to discuss this topic or other questions related to data Stora
 - [DataPoint Documentation](https://cedadev.github.io/datapoint/)
 - [CEDA STAC Browser](https://radiantearth.github.io/stac-browser/#/external/api.stac.ceda.ac.uk/?.language=en)
 - [Earth Observation Data Hub](https://eodatahub.org.uk/)
+- [pyeodh Github Repository](https://github.com/EO-DataHub/pyeodh)
 - [STAC Specification](https://stacspec.org/en)
 - [Pystac Client Documentation](https://pystac-client.readthedocs.io/en/stable/)
 - [Kerchunk Documentation](https://fsspec.github.io/kerchunk/)
