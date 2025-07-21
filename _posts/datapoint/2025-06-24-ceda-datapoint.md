@@ -6,7 +6,7 @@ date:   2025-06-24 15:00:00
 tags: [Cloud, API, STAC, Kerchunk, Zarr, Interoperable, Pystac]
 ---
 
-TL;DR STAC (Spatio-Temporal Asset Catalog) is a widely adopted standard for metadata records within the Earth Observation community and beyond, created as a standardised way to expose collections of spatio-temporal data. For several years, CEDA has been working towards a STAC-based metadata catalog to represent our data holdings within the archive. The CEDA STAC catalog has been in development for several years and has become part of the Earth Observation Data Hub (EODH) project led by the National Centre for Earth Observation (NCEO). A key innovation for the CEDA catalog has been the inclusion of a CMIP6 data profile into STAC, an important step towards bridging the gap between Earth Observation and Climatology datasets.
+TL;DR STAC (Spatio-Temporal Asset Catalog) is a widely adopted standard for metadata records within the Earth Observation community and beyond, created as a standardised way to expose collections of spatio-temporal data. For several years, CEDA has been working towards a STAC-based metadata catalog to represent our data holdings within the archive. The CEDA STAC catalog has become part of the Earth Observation Data Hub (EODH) project led by the National Centre for Earth Observation (NCEO). A key innovation for the CEDA catalog has been the inclusion of a CMIP6 data profile into STAC, an important step towards bridging the gap between Earth Observation and Climate model datasets.
 
 DataPoint is a package developed at CEDA to provide key features for improved search functionality across the CEDA STAC catalog, as well as integrating known cloud-optimised formats for effective access to analysis-ready data. In this article we discuss the inspiration for creating DataPoint and its impact for the user community, as well as the strategic direction for CEDA towards cloud-enabled data processing. 
 
@@ -33,7 +33,7 @@ DataPoint is a package developed at CEDA to provide key features for improved se
 
 # Cloud Optimised Formats for Data
 
-Over the last few years CEDA has creating workflows to generate new cloud-optimised data representations at-scale, using open-source tools like Kerchunk and Zarr. These tools have been developed to enable greater access to large sets of data traditionally stored in data archives that require knowledge of the posix filesystem and access methods in order to make use of the data. Cloud-optimised data representations open the door to greater interconnectivity between data centres and fewer physical/technical barriers to research requiring data analysis. This represents the latest step towards subsetting and aggregating data for greater data access, following projects such as OPeNDAP which enables HTTP range requests to access subsets of data in NetCDF and other formats. 
+Over the last few years CEDA has creating workflows to generate new cloud-optimised data representations at-scale, using open-source tools like Kerchunk and Zarr. These tools have been developed to enable greater access to large sets of data traditionally stored in data archives that require knowledge of the posix filesystem and access methods in order to make use of the data. Cloud-optimised data representations open the door to greater interconnectivity between data centres and fewer physical and technical barriers to research requiring data analysis. This represents the latest step towards subsetting and aggregating data for optimised remote workflows, following projects such as OPeNDAP which enables HTTP range requests to access subsets of data in NetCDF and other formats. 
 
 The Kerchunk reference specification, used to produce "Virtual" zarr stores enables similar range-based HTTP access to archival data, condensed into a single reference file which serves as an access layer on top of the existing dataset. Chunk-based references are stored using JSON and can be used to construct an Xarray Dataset, using Dask for lazy data loading. By comparison, the Zarr format splits data chunks into individual binary files, with an attached metadata file that can be used with the Zarr API. CEDA focuses specifically on data representations/references using Kerchunk, where duplication of data for cloud-based storage is minimised, as public cloud storage can often be expensive and constitute a considerable additional carbon cost.
 
@@ -64,14 +64,14 @@ Other similar technologies exist which can build data representations using clou
 
 ## Why should you use DataPoint?
 
-As of the writing of this article, DataPoint should be considered a non-production package, meaning that it is not advised to solely rely on DataPoint for all data analysis use cases. While the syntax and usage of DataPoint is unlikely to change, the STAC catalog infrastructure is likely to be updated and improved on an ongoing basis, which may cause changes to observed search results with the current package.
+At the time of writing this article, DataPoint should be considered a non-production package, meaning that it is not advised to solely rely on DataPoint for all data analysis use cases. While the syntax and usage of DataPoint is unlikely to change, the STAC catalog infrastructure is likely to be updated and improved on an ongoing basis, which may cause changes to observed search results with the current package.
 
 The best and most encourageable use case for DataPoint for the time being is for quicklooks and brief analysis of data within the STAC catalog, as well as its use as a data locator. Users are advised to identify key parameters of the dataset they are accessing (i.e item identifier or path to data files), to ensure reusability of any data analysis methods being performed. Future DataPoint updates will involve enabling easier sharing and saving of searches which are reusable and fit with the FAIR data principles.
 
 With that being said, now is a great opportunity to start using DataPoint for locating and quickly accessing data within CEDA as this method of data retrieval is becoming increasingly common within the wider climate data landscape. User-provided feedback can directly impact new feature releases on a short timescale as this project is in active development, especially since this is a CEDA-developed package which mostly caters for CEDA-centric use cases. The CEDA DataPoint API has now been added to the JASMIN Standard Computing Environment (JASPY) Module.
 
 To summarise:
- - DataPoint is developed directly by CEDA to serve the user community, so CEDA-centric use cases can be catered directly with features requested by the community.
+ - DataPoint is developed directly by CEDA to serve the user community, so CEDA-centric use cases can be catered for directly with features requested by the community.
  - API-based/cloud-native data access is becoming increasingly common - why not start with DataPoint?
 
 # DataPoint API Features
@@ -84,7 +84,7 @@ STAC *assets* within the collections that are accessed by DataPoint have a refer
 
 ## Format-Agnostic Data Handling
 
-Where DataPoint objects have been created to represent specific datasets, these objects have the capacity to access and serve data directly, again without user configuration required. The format of the data and storage configurations do not need to be known to the user; you do not need to know that the data is stored as Cloud-Optimised GeoTiff (COG), Zarr or any other format. DataPoint knows how to open them for you - this is currently supported for cloud-based formats/specifications like COG, Zarr and Kerchunk, but in future will be extended for other file types like NetCDF/HDF, CSV, etc. An example of how to extract an xarray-based data representation from a given STAC item (regardless of format) is below:
+Where DataPoint objects have been created to represent specific datasets, these objects have the capacity to access and serve data directly, again without user configuration required. The format of the data and storage configurations do not need to be known to the user; you do not need to know that the data is stored as Cloud-Optimised GeoTiff (COG), Zarr or any other format. DataPoint knows how to open them for you - this is currently supported for cloud-based formats/specifications like COG, Zarr and Kerchunk, but in future will be extended for other file types like NetCDF/HDF, CSV, etc. An example of how to extract an xarray-based data representation from a given STAC item (regardless of format) is given below:
 
 ```
 from ceda_datapoint import DataPointClient
@@ -140,7 +140,7 @@ The CEDA STAC API server is still in a pre-production stage, subject to change a
     description="Figure 4: CEDA STAC Browser rendered by RadiantEarth"
 %}
 
-Some specific collections include cmip6 (CMIP Phase 6, provided by WCRP), cordex and various sentinel-based collections describing ARD products, which has been arranged in partnership with EOCIS. These STAC collections will be expanded over time, and are exposed for active use within EODH, detailed below.
+Some specific collections include cmip6 (CMIP Phase 6, provided by WCRP), CORDEX and various sentinel-based collections describing ARD products, which has been arranged in partnership with EOCIS. These STAC collections will be expanded over time, and are exposed for active use within EODH, detailed below.
 
 ## Earth Observation Data Hub
 
