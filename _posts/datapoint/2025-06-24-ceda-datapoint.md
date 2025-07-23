@@ -6,9 +6,11 @@ date:   2025-06-24 15:00:00
 tags: [Cloud, API, STAC, Kerchunk, Zarr, Interoperable, Pystac]
 ---
 
-TL;DR STAC (Spatio-Temporal Asset Catalog) is a widely adopted standard for metadata records within the Earth Observation community and beyond, created as a standardised way to expose collections of spatio-temporal data. For several years, CEDA has been working towards a STAC-based metadata catalog to represent our data holdings within the archive. The CEDA STAC catalog has become part of the Earth Observation Data Hub (EODH) project led by the National Centre for Earth Observation (NCEO). A key innovation for the CEDA catalog has been the inclusion of a CMIP6 data profile into STAC, an important step towards bridging the gap between Earth Observation and Climate model datasets.
+[STAC (Spatio-Temporal Asset Catalog)](https://stacspec.org/en) is a widely adopted standard for metadata records within the Earth Observation community and beyond, created as a standardised way to expose collections of spatio-temporal data. For several years, the [Centre for Environmental Data Analysis (CEDA)](https://ceda.ac.uk/) team has been working towards a STAC-based metadata catalog to represent our data holdings within the archive. A key innovation for the CEDA catalog has been the inclusion of a [CMIP6 data](https://catalogue.ceda.ac.uk/uuid/b96ce180077f4810abc4eef0e48901d9/) profile into STAC, an important step towards bridging the gap between Earth Observation and Climate model datasets.
 
 DataPoint is a package developed at CEDA to provide key features for improved search functionality across the CEDA STAC catalog, as well as integrating known cloud-optimised formats for effective access to analysis-ready data. In this article we discuss the inspiration for creating DataPoint and its impact for the user community, as well as the strategic direction for CEDA towards cloud-enabled data processing. 
+
+The CEDA STAC catalog has become part of the [Earth Observation Data Hub (EODH)](https://eodatahub.org.uk/) project led by the [National Centre for Earth Observation (NCEO)](https://www.nceo.ac.uk/). 
 
 # Index
 - [Acronyms](#acronyms)
