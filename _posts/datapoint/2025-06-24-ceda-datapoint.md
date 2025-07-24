@@ -15,7 +15,7 @@ The CEDA STAC catalog has become part of the [Earth Observation Data Hub (EODH)]
 # Index
 - [Acronyms](#acronyms)
 - [Cloud Optimised Formats for Data](#cloudformats)
-- [Inspiration for DataPoint](#inspiration)
+- [Inspiration](#inspiration)
 - [DataPoint API Features](#features)
 - [Current CEDA STAC Collections](#collections)
 - [Next Steps](#next-steps)
@@ -51,7 +51,7 @@ The Kerchunk reference specification, used to produce "Virtual" zarr stores enab
 
 These new data representations have been ingested into the CEDA Archive and are accessible to all users, however since these technologies are relatively new to most user communities the mechanisms for accessing these types of data are unfamiliar and not widely known. Researchers using our data are more familiar with well-established formats like NetCDF/HDF which have existed for several decades as standards for data archival. What has been missing is a collation of these technologies into a single client-side tool that CEDA can direct users towards, and focus efforts towards improving data access across all new developments.
 
-# Inspiration for DataPoint
+# Inspiration
 
 ## Why did we create DataPoint?
 
@@ -164,10 +164,8 @@ With that being said, the question of reusability and repeatability is something
 
 Works are ongoing within CEDA to expand the current STAC holdings that represent the archive to encompass more data. This includes the UK Climate Projections (UKCP) and Coupled Model Intercomparison Project (CMIP6/7), both of which have some limited STAC representation at present. DataPoint will continue to be promoted as a core package for use on JASMIN to access data in the CEDA Archive, and there is considerable desire to incorporate other projects and datasets into this model of data access.
 
-# Getting in touch
+## Getting in touch
 If you would like to discuss this topic or other questions related to data Storage, Access and Discovery, please contact Daniel Westwood by [email](daniel.westwood@stfc.ac.uk).
-
-# Further Resources
 
 ## Github Repositories and Documentation
 - [CEDA DataPoint Github](https://github.com/cedadev/datapoint)
@@ -179,7 +177,7 @@ If you would like to discuss this topic or other questions related to data Stora
 - [Kerchunk Documentation](https://fsspec.github.io/kerchunk/)
 - [VirtualiZarr Documentation](https://virtualizarr.readthedocs.io/en/latest/)
 
-## Services and Organisations
+## Services and Organisations
 - [EOCIS: Earth Observation Climate Information Service](https://eocis.org/)
 - [CEDA STAC Browser](https://radiantearth.github.io/stac-browser/#/external/api.stac.ceda.ac.uk/?.language=en)
 - [Earth Observation Data Hub](https://eodatahub.org.uk/)
