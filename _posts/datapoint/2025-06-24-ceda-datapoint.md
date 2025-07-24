@@ -2,7 +2,7 @@
 layout: post
 title:  "Discovering and Accessing Data at CEDA: The way forward with DataPoint"
 author: Daniel Westwood
-date:   2025-06-24 15:00:00
+date:   2025-07-24 15:00:00
 tags: [Cloud, API, STAC, Kerchunk, Zarr, Interoperable, Pystac]
 ---
 
